@@ -42,6 +42,11 @@ class TranslatableUrlRule extends BaseObject implements UrlRuleInterface {
     public $forceRuleSearch = false;
 
     /**
+     * @var array Additional options for the UrlRule object
+     */
+    public $urlRuleOptions = [];
+
+    /**
      * Initialize TranslatableUrlRule
      * @throws InvalidConfigException
      */
@@ -64,7 +69,7 @@ class TranslatableUrlRule extends BaseObject implements UrlRuleInterface {
      */
     protected function updateRules() {
         foreach ($this->patterns as $language => $pattern) {
-            $this->rules[$language] = new UrlRule(['pattern' => $pattern, 'route' => $this->route]);
+            $this->rules[$language] = new UrlRule(array_merge(['pattern' => $pattern, 'route' => $this->route], $this->urlRuleOptions));
         }
     }
 
@@ -151,4 +156,11 @@ class TranslatableUrlRule extends BaseObject implements UrlRuleInterface {
         return $rule->createUrl($manager, $route, $params);
     }
 
+    /**
+     * @return string
+     */
+    public function __toString()
+    {
+        return join(', ', $this->patterns);
+    }
 }
