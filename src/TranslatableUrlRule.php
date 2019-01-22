@@ -157,6 +157,7 @@ class TranslatableUrlRule extends BaseObject implements UrlRuleInterface {
     }
 
     /**
+     * When the debugger tries to print out the rule to the debug panel
      * @return string
      */
     public function __toString()
